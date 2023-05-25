@@ -125,6 +125,21 @@ function rectangularCollision({ rectangule1, rectangule2 }) {
     )
 }
 
+let timer = 10;
+function decreaseTimer() {
+    if (timer > 0) {
+        setTimeout(decreaseTimer, 1000)
+        timer--;
+        document.querySelector('#timer').innerHTML = timer;
+    }
+
+    if (player.health === enemy.health) {
+        console.log('tie');
+    }
+}
+
+decreaseTimer();
+
 function animate() {
     window.requestAnimationFrame(animate)
     c.fillStyle = 'black'
@@ -168,7 +183,8 @@ function animate() {
         enemy.isAttacking
     ) {
         enemy.isAttacking = false;
-        console.log("enemy attack successful");
+        player.health -= 20;
+        document.querySelector('#playerHealth').style.width = player.health + '%';
     }
 }
 
