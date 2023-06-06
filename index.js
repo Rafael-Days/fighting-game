@@ -16,6 +16,16 @@ const background = new Sprite({
     imageSrc: './img/background.png'
 })
 
+const shop = new Sprite({
+    position: {
+        x: 600,
+        y: 128
+    },
+    imageSrc: './img/shop.png',
+    scale: 2.75,
+    framesMax: 6
+})
+
 const player = new Fighter({
     position: {
         x: 10,
@@ -64,42 +74,6 @@ const keys = {
     }
 }
 
-//let lastKey
-
-function rectangularCollision({ rectangule1, rectangule2 }) {
-    return (
-        rectangule1.attackBox.position.x + rectangule1.attackBox.width >= rectangule2.position.x &&
-        rectangule1.attackBox.position.x <= rectangule2.position.x + rectangule2.width &&
-        rectangule1.attackBox.position.y + rectangule1.attackBox.height >= rectangule2.position.y &&
-        rectangule1.attackBox.position.y <= rectangule2.position.y + rectangule2.height
-    )
-}
-
-function determineWinner({ player, enemy, timerId }) {
-    clearTimeout(timerId)
-    document.querySelector('#displayText').style.display = 'flex'
-    if (player.health === enemy.health) {
-        document.querySelector('#displayText').innerHTML = 'Tie';
-    } else if (player.health > enemy.health) {
-        document.querySelector('#displayText').innerHTML = 'Player 1 Wins';
-    } else if (player.health < enemy.health) {
-        document.querySelector('#displayText').innerHTML = 'Player 2 Wins';
-    }
-}
-
-let timer = 60;
-let timerId
-function decreaseTimer() {
-    if (timer > 0) {
-        timerId = setTimeout(decreaseTimer, 1000)
-        timer--;
-        document.querySelector('#timer').innerHTML = timer;
-    }
-    if (timer === 0) {
-        determineWinner({ player, enemy, timerId });
-    }
-}
-
 decreaseTimer();
 
 function animate() {
@@ -107,6 +81,7 @@ function animate() {
     c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.update();
+    shop.update();
     player.update();
     enemy.update();
 
